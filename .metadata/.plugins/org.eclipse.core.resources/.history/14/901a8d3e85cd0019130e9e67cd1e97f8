@@ -1,0 +1,14 @@
+package com.telkomsel.sms.sms01.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class SMSController {
+	
+	@RequestMapping("/login")
+	public String loginMessage(){
+		return "login";
+	}
+
+}

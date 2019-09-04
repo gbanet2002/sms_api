@@ -1,0 +1,10 @@
+package com.in28minutes.springboot.web.nbs03.service;
+
+//Spring bean
+public class LoginService {
+
+	public boolean validateUser(String userid, String password) {
+		//gbanet2002, Keysha909
+		return userid.equalsIgnoreCase("gbanet2002") && password.equalsIgnoreCase("Keysha909");
+	}
+}

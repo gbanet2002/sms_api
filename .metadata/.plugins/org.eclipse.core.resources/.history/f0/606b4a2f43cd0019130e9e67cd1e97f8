@@ -1,0 +1,5 @@
+package com.in28minutes.springboot.web.nbs03.service;
+
+public class LoginService {
+
+}

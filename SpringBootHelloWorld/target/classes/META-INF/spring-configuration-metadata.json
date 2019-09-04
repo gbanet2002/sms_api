@@ -1,0 +1,18 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.java4s.app.configs.SpringSecurityConfig",
+      "name": "spring.datasource",
+      "sourceMethod": "public javax.sql.DataSource ds() ",
+      "type": "javax.sql.DataSource"
+    },
+    {
+      "sourceType": "com.java4s.app.configs.SpringJava4sConfig",
+      "name": "spring.secondDatasource",
+      "sourceMethod": "public javax.sql.DataSource secondDataSource() ",
+      "type": "javax.sql.DataSource"
+    }
+  ],
+  "properties": []
+}

@@ -1,0 +1,117 @@
+package com.telkomsel.sms.sms01.model;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.json.JSONObject;
+
+public class sendSms {
+
+	public static String send(String sender_id, String recipient, String sms_text) {
+		
+		String result = "000";
+		
+		// Initialize Mashery variable
+		String api_key = "e688u2hgpkzjd244wecywwvh";
+		String api_secret = "xOc3s";
+		String api_url = "https://dcore-dev.telkomsel.com/V3/sendsms";
+
+		// Initialize SMS Body variable
+		String transaction_id = UUID.randomUUID().toString();
+		String callback_url = "";
+		
+		/*String sender_id = "DIGIHUB";
+		String recipient = "628119110851";
+		String sms_text = "Test 123";
+		*/
+		
+		JSONObject requestBody = constructSMSBody(transaction_id, callback_url, sender_id, recipient, sms_text);
+		System.out.println("Request body = " + requestBody.toString());
+
+		// Generate signature
+		String x_signature = getXSignature(api_key, api_secret);
+		System.out.println("X-Signature = " + x_signature);
+
+		// Response variable
+		String mashery_response = null;
+		int mashery_response_code = 0;
+
+		try {
+			URL obj = new URL(api_url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+			// add reuqest header
+			con.setRequestMethod("POST");
+			con.setRequestProperty("Content-Type", "application/json");
+			con.setRequestProperty("api_key", api_key);
+			con.setRequestProperty("x-signature", x_signature);
+			// con.setReadTimeout(mashery_timeout);
+			con.setDoOutput(true);
+
+			// Send post request
+			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+			wr.writeBytes(requestBody.toString());
+			wr.flush();
+			wr.close();
+
+			mashery_response_code = con.getResponseCode();
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			mashery_response = response.toString();
+
+			Map<String, List<String>> map = con.getHeaderFields();
+			for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+				// System.out.println("Key : " + entry.getKey()
+				// + " ,Value : " + entry.getValue());
+				//System.out.println(entry.getKey() + " : " + entry.getValue());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		//System.out.println("Mashery Response Code : " + mashery_response_code);
+		//System.out.println("Mashery Response : " + mashery_response);
+		
+		result = mashery_response_code + "|" + mashery_response;
+
+		return result;
+	}
+
+	private static JSONObject constructSMSBody(String transaction_id, String callback_url, String sender_id,
+			String recipient, String sms_text) {
+		JSONObject transaction = new JSONObject();
+		transaction.put("transaction_id", transaction_id);
+		transaction.put("callback_url", callback_url);
+
+		JSONObject sms = new JSONObject();
+		sms.put("sender_id", sender_id);
+		sms.put("recipient", recipient);
+		sms.put("sms_text", sms_text);
+
+		JSONObject sms_body = new JSONObject();
+		sms_body.put("transaction", transaction);
+		sms_body.put("sms", sms);
+
+		return sms_body;
+	}
+
+	private static String getXSignature(String api_key, String api_secret) {
+		// System.out.println(api_key + api_secret +
+		// Long.toString(System.currentTimeMillis() / 1000L));
+		return DigestUtils.sha256Hex(api_key + api_secret + Long.toString(System.currentTimeMillis() / 1000L));
+	}
+}

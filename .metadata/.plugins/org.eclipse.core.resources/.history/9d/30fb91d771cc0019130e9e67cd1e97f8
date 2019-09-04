@@ -1,0 +1,5 @@
+package com.telkomsel.nbs02.model;
+
+public class Todo {
+
+}

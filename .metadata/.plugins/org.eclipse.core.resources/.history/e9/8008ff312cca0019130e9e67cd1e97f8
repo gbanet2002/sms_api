@@ -1,0 +1,5 @@
+package com.belajar.restapi.controller;
+
+public class ApplicationController {
+
+}

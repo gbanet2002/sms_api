@@ -1,0 +1,27 @@
+package com.in28minutes.springboot.web.nbs03.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+//import com.in28minutes.springboot.web.nbs03.service.LoginService;
+import com.in28minutes.springboot.web.nbs03.service.TodoService;
+
+@Controller
+public class TodoController {
+	
+	@Autowired
+	TodoService service;
+
+	@RequestMapping(value="/list-todos", method = RequestMethod.GET)
+	public String showTodosList(ModelMap model, @RequestParam String userid){
+		//model.put("name", name);
+		model.put("todos", service.retrieveTodos(userid));
+		return "list-todos";
+	}
+	
+	
+}

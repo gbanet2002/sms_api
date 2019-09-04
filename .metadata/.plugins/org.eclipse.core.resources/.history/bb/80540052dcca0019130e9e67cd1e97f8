@@ -1,0 +1,5 @@
+package nbs.start_stop_svc.server;
+
+public class Server {
+
+}

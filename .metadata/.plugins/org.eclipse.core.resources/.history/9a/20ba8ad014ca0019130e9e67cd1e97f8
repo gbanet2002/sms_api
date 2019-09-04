@@ -1,0 +1,5 @@
+package com.ichromanrd.apps.hello.controller;
+
+public class HelloWorldApplicationController {
+
+}

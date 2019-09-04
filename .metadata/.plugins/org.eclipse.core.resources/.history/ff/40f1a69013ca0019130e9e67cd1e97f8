@@ -1,0 +1,5 @@
+package com.hello.test.controller;
+
+public class HelloTestApplicationController {
+
+}

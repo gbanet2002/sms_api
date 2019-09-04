@@ -1,0 +1,5 @@
+package com.java4s.app.configs;
+
+public class SpringSecurityConfig {
+
+}

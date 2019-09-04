@@ -1,0 +1,14 @@
+package com.telkomsel.nbs01.nbs01.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class Nbs01ApplicationController {
+	  
+    @RequestMapping("/home")
+    public String home() {
+    	return "Home";
+    }
+ 
+}

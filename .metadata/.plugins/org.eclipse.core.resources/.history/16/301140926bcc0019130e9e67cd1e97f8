@@ -1,0 +1,5 @@
+package com.telkomsel.nbs01.nbs01.controller;
+
+public class Nbs01ApplicationController {
+
+}
